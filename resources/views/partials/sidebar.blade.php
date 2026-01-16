@@ -1,10 +1,12 @@
 @php
   $isActive = fn($name) => request()->routeIs($name) ? 'active' : '';
+  $logoPath = \App\Models\Setting::getValue('app_logo');
+  $logoUrl = $logoPath ? asset('storage/' . $logoPath) : asset('backend/img/logo.svg');
 @endphp
 
 <aside class="sidebar">
   <div class="brand">
-    <img src="{{ asset('backend/img/logo.svg') }}" alt="Logo">
+    <img src="{{ $logoUrl }}" alt="Logo">
     <div class="title">
       <strong>MASLAHAT</strong>
       <span>Darussalam Al-Hafidz</span>
@@ -87,7 +89,7 @@
     <!-- PEMBAYARAN -->
     <div class="section">PEMBAYARAN</div>
 
-    <a href="#" class="{{ request()->is('admin/pembayaran/create*') ? 'active' : '' }}">
+    <a href="{{ route('pembayaran.create') }}" class="{{ request()->is('admin/pembayaran/create*') ? 'active' : '' }}">
       <span class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
@@ -97,7 +99,7 @@
       Input Pembayaran
     </a>
 
-    <a href="#" class="{{ request()->is('admin/pembayaran/cetak*') ? 'active' : '' }}">
+    <a href="{{ route('pembayaran.cetak') }}" class="{{ request()->is('admin/pembayaran/cetak*') ? 'active' : '' }}">
       <span class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path fill-rule="evenodd" d="M7.875 1.5C6.839 1.5 6 2.34 6 3.375v2.99c-.426.053-.851.11-1.274.174-1.454.218-2.476 1.483-2.476 2.917v6.294a3 3 0 0 0 3 3h.27l-.155 1.705A1.875 1.875 0 0 0 7.232 22.5h9.536a1.875 1.875 0 0 0 1.867-2.045l-.155-1.705h.27a3 3 0 0 0 3-3V9.456c0-1.434-1.022-2.7-2.476-2.917A48.816 48.816 0 0 0 18 6.366V3.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM16.5 6.205v-2.83A.375.375 0 0 0 16.125 3h-8.25a.375.375 0 0 0-.375.375v2.83a49.353 49.353 0 0 1 9 0Zm-.217 8.295a.75.75 0 1 0-1.066 1.06c.576.579 1.533.579 2.109 0a.75.75 0 1 0-1.043-1.06Z" clip-rule="evenodd" />
@@ -109,7 +111,7 @@
     <!-- LAPORAN -->
     <div class="section">LAPORAN</div>
 
-    <a href="#" class="{{ request()->is('admin/laporan/bulanan*') ? 'active' : '' }}">
+    <a href="{{ route('laporan.bulanan') }}" class="{{ request()->is('admin/laporan/bulanan*') ? 'active' : '' }}">
       <span class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 0 1 8.25-8.25.75.75 0 0 1 .75.75v6.75H18a.75.75 0 0 1 .75.75 8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" />
@@ -119,7 +121,7 @@
       Rekap Bulanan
     </a>
 
-    <a href="#" class="{{ request()->is('admin/laporan/tunggakan*') ? 'active' : '' }}">
+    <a href="{{ route('laporan.tunggakan') }}" class="{{ request()->is('admin/laporan/tunggakan*') ? 'active' : '' }}">
       <span class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
@@ -127,22 +129,13 @@
       </span>
       Tunggakan
     </a>
-
-    <a href="#" class="{{ request()->is('admin/laporan/rekap*') ? 'active' : '' }}">
-      <span class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-          <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
-        </svg>
-      </span>
-      Rekap Santri/Kelas
-    </a>
     @endif
 
     @if(auth()->user()->role === 'santri')
     <!-- MENU SANTRI -->
     <div class="section">SANTRI PANEL</div>
 
-    <a href="#" class="{{ request()->is('santri/tagihan*') ? 'active' : '' }}">
+    <a href="{{ route('santri.tagihan') }}" class="{{ request()->routeIs('santri.tagihan*') ? 'active' : '' }}">
       <span class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
@@ -152,31 +145,13 @@
       Tagihan Saya
     </a>
 
-    <a href="#" class="{{ request()->is('santri/riwayat*') ? 'active' : '' }}">
+    <a href="{{ route('santri.riwayat') }}" class="{{ request()->is('santri/riwayat*') ? 'active' : '' }}">
       <span class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
         </svg>
       </span>
       Riwayat Pembayaran
-    </a>
-    
-    <a href="#" class="{{ request()->is('santri/kwitansi*') ? 'active' : '' }}">
-      <span class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-          <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
-        </svg>
-      </span>
-      Unduh Kwitansi
-    </a>
-
-    <a href="#" class="{{ request()->is('santri/upload*') ? 'active' : '' }}">
-      <span class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-          <path fill-rule="evenodd" d="M10.5 3.75a6.001 6.001 0 0 0-2.03.472A.75.75 0 0 0 8.25 4.5v15a.75.75 0 0 0 .75.75h8.25a.75.75 0 0 0 .75-.75v-15a.75.75 0 0 0-.22-.53L10.5 3.75Zm9.75.568V19.5a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V4.5A2.25 2.25 0 0 1 6 2.25h9.75a2.25 2.25 0 0 1 1.589.658l2.41 2.41ZM6.75 6.75A.75.75 0 0 1 7.5 6h5.25a.75.75 0 0 1 0 1.5H7.5a.75.75 0 0 1-.75-.75Zm0 3.75a.75.75 0 0 1 .75-.75h5.25a.75.75 0 0 1 0 1.5H7.5a.75.75 0 0 1-.75-.75Zm0 3.75a.75.75 0 0 1 .75-.75h5.25a.75.75 0 0 1 0 1.5H7.5a.75.75 0 0 1-.75-.75Zm0 3.75a.75.75 0 0 1 .75-.75h5.25a.75.75 0 0 1 0 1.5H7.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-        </svg>
-      </span>
-      Upload Bukti Transfer
     </a>
 
     <a href="{{ route('profile.details') }}" class="{{ request()->routeIs('profile.details') ? 'active' : '' }}">

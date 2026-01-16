@@ -9,13 +9,21 @@
 </head>
 <body>
 
+    @php
+        $logoPath = \App\Models\Setting::getValue('app_logo');
+        $logoUrl = $logoPath ? asset('storage/' . $logoPath) : null;
+    @endphp
+
     <div class="login-card">
         <div class="login-header">
             <div style="margin-bottom: 1rem;">
-                <!-- Logo placeholder or Icon -->
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
+                @if($logoUrl)
+                    <img src="{{ $logoUrl }}" alt="Logo" style="height: 48px; width: auto;">
+                @else
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                @endif
             </div>
             <h1>Selamat Datang</h1>
             <p>Masuk untuk mengelola pembayaran</p>

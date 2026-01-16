@@ -17,6 +17,8 @@ class Tagihan extends Model
         'jumlah',
         'status',
         'keterangan',
+        'bukti_bayar',
+        'tgl_upload',
     ];
 
     public function santri()

@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     // Route khusus untuk detail profil santri
     Route::get('/profile/details', [App\Http\Controllers\ProfileController::class, 'details'])->name('profile.details');
     Route::put('/profile/details', [App\Http\Controllers\ProfileController::class, 'updateDetails'])->name('profile.update.details');
+    Route::get('/profile/kelas', [App\Http\Controllers\ProfileController::class, 'kelas'])->name('profile.kelas');
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
@@ -51,19 +52,33 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/tagihan/detail', function () { return 'Halaman Detail Tagihan'; });
 
     // Pembayaran
-    Route::get('/pembayaran/create', function () { return 'Halaman Input Pembayaran'; });
-    Route::get('/pembayaran/cetak', function () { return 'Halaman Cetak Kwitansi'; });
+    Route::get('/pembayaran/create', [\App\Http\Controllers\Admin\PembayaranController::class, 'create'])->name('pembayaran.create');
+    Route::post('/pembayaran', [\App\Http\Controllers\Admin\PembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::get('/pembayaran/get-tagihan/{id}', [\App\Http\Controllers\Admin\PembayaranController::class, 'getTagihan'])->name('pembayaran.get-tagihan');
+    Route::get('/pembayaran/get-pending', [\App\Http\Controllers\Admin\PembayaranController::class, 'getPending'])->name('pembayaran.get-pending');
+    Route::get('/pembayaran/get-by-class/{kelasId}', [\App\Http\Controllers\Admin\PembayaranController::class, 'getByClass'])->name('pembayaran.get-by-class');
+    Route::get('/pembayaran/get-history-by-class/{kelasId}', [\App\Http\Controllers\Admin\PembayaranController::class, 'getHistoryByClass'])->name('pembayaran.get-history-by-class');
+    Route::get('/pembayaran/get-riwayat/{id}', [\App\Http\Controllers\Admin\PembayaranController::class, 'getRiwayat'])->name('pembayaran.get-riwayat');
+    Route::get('/pembayaran/cetak', [\App\Http\Controllers\Admin\PembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+    Route::post('/pembayaran/print', [\App\Http\Controllers\Admin\PembayaranController::class, 'print'])->name('pembayaran.print');
 
     // Laporan
-    Route::get('/laporan/bulanan', function () { return 'Halaman Laporan Bulanan'; });
-    Route::get('/laporan/tunggakan', function () { return 'Halaman Laporan Tunggakan'; });
+    Route::get('/laporan/bulanan', [\App\Http\Controllers\Admin\LaporanController::class, 'bulanan'])->name('laporan.bulanan');
+    Route::get('/laporan/bulanan/export', [\App\Http\Controllers\Admin\LaporanController::class, 'exportBulanan'])->name('laporan.bulanan.export');
+    Route::get('/laporan/bulanan/export-pdf', [\App\Http\Controllers\Admin\LaporanController::class, 'exportBulananPdf'])->name('laporan.bulanan.export-pdf');
+    Route::get('/laporan/tunggakan', [\App\Http\Controllers\Admin\LaporanController::class, 'tunggakan'])->name('laporan.tunggakan');
+    Route::get('/laporan/tunggakan/export', [\App\Http\Controllers\Admin\LaporanController::class, 'exportTunggakan'])->name('laporan.tunggakan.export');
+    Route::get('/laporan/tunggakan/export-pdf', [\App\Http\Controllers\Admin\LaporanController::class, 'exportTunggakanPdf'])->name('laporan.tunggakan.export-pdf');
     Route::get('/laporan/rekap', function () { return 'Halaman Rekap Laporan'; });
 });
 
 Route::middleware(['auth', 'role:santri'])->prefix('santri')->group(function () {
     Route::get('/dashboard', function () { return view('santri.dashboard'); })->name('santri.dashboard');
-    Route::get('/tagihan', function () { return 'Halaman Tagihan Saya'; });
-    Route::get('/riwayat', function () { return 'Halaman Riwayat Pembayaran'; });
+    Route::get('/tagihan', [App\Http\Controllers\Santri\TagihanController::class, 'index'])->name('santri.tagihan');
+    Route::get('/tagihan/{id}/bayar', [App\Http\Controllers\Santri\TagihanController::class, 'bayar'])->name('santri.tagihan.bayar');
+    Route::put('/tagihan/{id}/bayar', [App\Http\Controllers\Santri\TagihanController::class, 'processBayar'])->name('santri.tagihan.process-bayar');
+    Route::get('/riwayat', [App\Http\Controllers\Santri\TagihanController::class, 'riwayat'])->name('santri.riwayat');
+    Route::get('/riwayat/{id}/kwitansi', [App\Http\Controllers\Santri\TagihanController::class, 'kwitansi'])->name('santri.riwayat.kwitansi');
     Route::get('/kwitansi', function () { return 'Halaman Unduh Kwitansi'; });
     Route::get('/upload', function () { return 'Halaman Upload Bukti'; });
 });
