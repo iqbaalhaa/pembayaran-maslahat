@@ -27,12 +27,19 @@ class AkunSantriImport implements ToModel, WithHeadingRow, WithValidation
             'role'     => 'santri',
         ]);
 
+        // Find Kelas ID if exists
+        $kelasData = null;
+        if (!empty($row['kelas'])) {
+            $kelasData = Kelas::where('nama_kelas', $row['kelas'])->first();
+        }
+
         // Create Santri linked to User
         return new Santri([
             'user_id'     => $user->id,
             'nis'         => $row['nis'],
             'nama'        => $row['nama'],
             'kelas'       => $row['kelas'] ?? null,
+            'kelas_id'    => $kelasData ? $kelasData->id : null,
             'wali_santri' => $row['wali_santri'] ?? null,
             'no_hp_wali'  => $row['no_hp_wali'] ?? null,
             'status'      => 'aktif',

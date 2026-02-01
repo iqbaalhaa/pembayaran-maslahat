@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Santri;
+use App\Models\Kelas;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
