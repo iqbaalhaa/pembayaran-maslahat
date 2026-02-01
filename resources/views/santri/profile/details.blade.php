@@ -54,11 +54,11 @@
                     <label for="tingkatan" style="display: block; margin-bottom: 8px; font-weight: 500;">Tingkatan</label>
                     <select name="tingkatan" id="tingkatan" class="form-control select2" required>
                         <option value="">-- Pilih Tingkatan --</option>
-                        @foreach($tingkatan as $t)
-                            <option value="{{ $t }}" {{ old('tingkatan', optional($user->santri->kelas)->tingkatan) == $t ? 'selected' : '' }}>
-                                {{ $t }}
-                            </option>
-                        @endforeach
+                            @foreach($tingkatan as $t)
+                                <option value="{{ $t }}" {{ old('tingkatan', optional(optional($user->santri)->kelas)->tingkatan) == $t ? 'selected' : '' }}>
+                                    {{ $t }}
+                                </option>
+                            @endforeach
                     </select>
                 </div>
 
@@ -77,20 +77,20 @@
 
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label for="tempat_lahir" style="display: block; margin-bottom: 8px; font-weight: 500;">Tempat Lahir</label>
-                    <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" value="{{ old('tempat_lahir', $user->santri->tempat_lahir) }}" placeholder="Contoh: Jakarta" required>
+                    <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" value="{{ old('tempat_lahir', optional($user->santri)->tempat_lahir) }}" placeholder="Contoh: Jakarta" required>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label for="tanggal_lahir" style="display: block; margin-bottom: 8px; font-weight: 500;">Tanggal Lahir</label>
-                    <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir', $user->santri->tanggal_lahir) }}" required>
+                    <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="{{ old('tanggal_lahir', optional($user->santri)->tanggal_lahir) }}" required>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="jenis_kelamin" style="display: block; margin-bottom: 8px; font-weight: 500;">Jenis Kelamin</label>
                     <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
-                        <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L" {{ old('jenis_kelamin', $user->santri->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="P" {{ old('jenis_kelamin', $user->santri->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="L" {{ old('jenis_kelamin', optional($user->santri)->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="P" {{ old('jenis_kelamin', optional($user->santri)->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
             </div>
@@ -101,7 +101,7 @@
 
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="alamat" style="display: block; margin-bottom: 8px; font-weight: 500;">Alamat Lengkap</label>
-                    <textarea name="alamat" id="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap" required>{{ old('alamat', $user->santri->alamat) }}</textarea>
+                        <textarea name="alamat" id="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap" required>{{ old('alamat', optional($user->santri)->alamat) }}</textarea>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
         const allKelas = @json($kelas->map(function ($k) {
             return ['id' => $k->id, 'nama_kelas' => $k->nama_kelas, 'tingkatan' => $k->tingkatan];
         }));
-        const initialKelasId = "{{ old('kelas_id', $user->santri->kelas_id) }}";
+        const initialKelasId = "{{ old('kelas_id', optional($user->santri)->kelas_id) }}";
 
         let initialTingkatan = "";
         if (initialKelasId) {

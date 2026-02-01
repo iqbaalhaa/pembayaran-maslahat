@@ -92,7 +92,7 @@
                     <select id="santri_id" class="form-control" style="width: 100%;">
                         <option value="">-- Pilih Santri --</option>
                         @foreach($santris as $santri)
-                            <option value="{{ $santri->id }}" data-nis="{{ $santri->nis }}" data-kelas="{{ $santri->kelas ? $santri->kelas->nama_kelas : '-' }}">
+                            <option value="{{ $santri->id }}" data-nis="{{ $santri->nis }}" data-kelas="{{ is_object($santri->kelas) ? ($santri->kelas->nama_kelas ?? '-') : ($santri->kelas ?? '-') }}">
                                 {{ $santri->nama }} ({{ $santri->nis }})
                             </option>
                         @endforeach

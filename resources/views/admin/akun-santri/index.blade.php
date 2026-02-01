@@ -55,7 +55,7 @@
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 12px; font-family: monospace; font-weight: 600;">{{ $user->username }}</td>
                     <td style="padding: 12px;">{{ $user->name }}</td>
-                    <td style="padding: 12px;">{{ $user->santri->kelas->nama_kelas ?? '-' }}</td>
+                    <td style="padding: 12px;">{{ optional(optional($user->santri)->kelas)->nama_kelas ?? '-' }}</td>
                     <td style="padding: 12px; color: var(--muted);">{{ $user->email }}</td>
                     <td style="padding: 12px; color: var(--muted);">{{ $user->created_at->format('d M Y') }}</td>
                     <td style="padding: 12px; text-align: right;">

@@ -137,7 +137,7 @@
             <tr>
                 <td><strong>NIS / Kelas</strong></td>
                 <td>:</td>
-                <td>{{ $santri->nis }} / {{ $santri->kelas ? $santri->kelas->nama_kelas : '-' }}</td>
+                <td>{{ $santri->nis }} / {{ is_object($santri->kelas) ? ($santri->kelas->nama_kelas ?? '-') : ($santri->kelas ?? '-') }}</td>
                 <td><strong>Petugas</strong></td>
                 <td>:</td>
                 <td>{{ auth()->user()->name ?? 'Admin' }}</td>

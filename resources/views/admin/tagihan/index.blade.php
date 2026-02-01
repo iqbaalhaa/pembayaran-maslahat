@@ -78,11 +78,11 @@
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 12px;">{{ $loop->iteration + $tagihans->firstItem() - 1 }}</td>
                     <td style="padding: 12px; font-weight: 600;">
-                        {{ $item->santri->nama }}
-                        <div style="font-size: 0.8rem; color: var(--muted); font-weight: normal;">{{ $item->santri->nis }}</div>
+                        {{ optional($item->santri)->nama ?? '-' }}
+                        <div style="font-size: 0.8rem; color: var(--muted); font-weight: normal;">{{ optional($item->santri)->nis ?? '-' }}</div>
                     </td>
-                    <td style="padding: 12px;">{{ $item->santri->kelas->nama_kelas ?? '-' }}</td>
-                    <td style="padding: 12px;">{{ $item->tarif->nama_tarif }}</td>
+                    <td style="padding: 12px;">{{ optional(optional($item->santri)->kelas)->nama_kelas ?? '-' }}</td>
+                    <td style="padding: 12px;">{{ optional($item->tarif)->nama_tarif ?? '-' }}</td>
                     <td style="padding: 12px;">{{ $item->bulan }} {{ $item->tahun }}</td>
                     <td style="padding: 12px;">Rp {{ number_format($item->jumlah, 0, ',', '.') }}</td>
                     <td style="padding: 12px;">
@@ -279,31 +279,34 @@
 
     function showDetail(element) {
         let item = JSON.parse(element.getAttribute('data-json'));
+        const santri = item.santri || {};
+        const kelas = santri.kelas || {};
+        const tarif = item.tarif || {};
         let content = `
             <table class="table" style="width: 100%;">
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Nama Santri</td>
-                    <td style="padding: 8px;">: ${item.santri.nama}</td>
+                    <td style="padding: 8px;">: ${santri.nama || '-'}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">NIS</td>
-                    <td style="padding: 8px;">: ${item.santri.nis}</td>
+                    <td style="padding: 8px;">: ${santri.nis || '-'}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Kelas</td>
-                    <td style="padding: 8px;">: ${item.santri.kelas ? item.santri.kelas.nama_kelas : '-'}</td>
+                    <td style="padding: 8px;">: ${kelas.nama_kelas || '-'}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Jenis Tagihan</td>
-                    <td style="padding: 8px;">: ${item.tarif.nama_tarif}</td>
+                    <td style="padding: 8px;">: ${tarif.nama_tarif || '-'}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Periode</td>
-                    <td style="padding: 8px;">: ${item.bulan} ${item.tahun}</td>
+                    <td style="padding: 8px;">: ${item.bulan || '-'} ${item.tahun || '-'}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Nominal</td>
-                    <td style="padding: 8px;">: Rp ${new Intl.NumberFormat('id-ID').format(item.jumlah)}</td>
+                    <td style="padding: 8px;">: Rp ${new Intl.NumberFormat('id-ID').format(item.jumlah || 0)}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Status</td>
@@ -315,7 +318,7 @@
                 </tr>
                 <tr>
                     <td style="padding: 8px; font-weight: 600;">Dibuat Pada</td>
-                    <td style="padding: 8px;">: ${new Date(item.created_at).toLocaleString('id-ID')}</td>
+                    <td style="padding: 8px;">: ${item.created_at ? new Date(item.created_at).toLocaleString('id-ID') : '-'}</td>
                 </tr>
             </table>
         `;

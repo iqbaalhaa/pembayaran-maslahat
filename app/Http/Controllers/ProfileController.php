@@ -76,7 +76,7 @@ class ProfileController extends Controller
 
         $request->validate([
             'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
+            'tanggal_lahir' => 'required|date_format:Y-m-d',
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string',
             'kelas_id' => 'required|exists:kelas,id',

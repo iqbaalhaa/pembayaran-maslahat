@@ -32,7 +32,8 @@ class AkunSantriController extends Controller
 
     public function create()
     {
-        return view('admin.akun-santri.create');
+        $kelas = \App\Models\Kelas::all();
+        return view('admin.akun-santri.create', compact('kelas'));
     }
 
     public function store(Request $request)
@@ -40,6 +41,7 @@ class AkunSantriController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'nis' => 'required|string|unique:santri,nis|unique:users,username',
+            'kelas_id' => 'required|exists:kelas,id',
         ]);
 
         // Create User
@@ -52,11 +54,14 @@ class AkunSantriController extends Controller
         ]);
 
         // Create Santri Linked to User
+        $kelas = \App\Models\Kelas::find($request->kelas_id);
         Santri::create([
             'nama' => $request->nama,
             'nis' => $request->nis,
             'user_id' => $user->id,
             'status' => 'aktif',
+            'kelas' => $kelas ? $kelas->nama_kelas : null,
+            'kelas_id' => $request->kelas_id,
         ]);
 
         return redirect()->route('akun-santri.index')->with('success', 'Akun santri berhasil dibuat. Password default adalah NISN.');
