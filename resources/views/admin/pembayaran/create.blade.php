@@ -412,7 +412,7 @@
                             statusBadge = '<span style="font-size: 0.75rem; background: #fff7ed; color: #c2410c; padding: 2px 8px; border-radius: 99px; border: 1px solid #fed7aa; margin-left: 8px; display: inline-block;">Menunggu Konfirmasi</span>';
                             
                             if (item.bukti_bayar) {
-                                buktiLink = `<div style="margin-top: 4px;"><a href="/storage/${item.bukti_bayar}" target="_blank" onclick="event.stopPropagation()" style="font-size: 0.85rem; color: var(--primary); display: flex; align-items: center; gap: 4px; text-decoration: none;">
+                                buktiLink = `<div style="margin-top: 4px;"><a href="/assets-file/${item.bukti_bayar}" target="_blank" onclick="event.stopPropagation()" style="font-size: 0.85rem; color: var(--primary); display: flex; align-items: center; gap: 4px; text-decoration: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     Lihat Bukti Bayar
                                 </a></div>`;

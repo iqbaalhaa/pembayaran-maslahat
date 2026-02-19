@@ -136,10 +136,14 @@ class SantriController extends Controller
 
         if ($request->hasFile('foto')) {
             // Delete old photo if exists
-            if ($santri->foto) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($santri->foto);
+            if ($santri->foto && file_exists(public_path('assets-file/' . $santri->foto))) {
+                unlink(public_path('assets-file/' . $santri->foto));
             }
-            $data['foto'] = $request->file('foto')->store('santri-photos', 'public');
+            
+            $file = $request->file('foto');
+            $filename = 'santri_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets-file/santri-photos'), $filename);
+            $data['foto'] = 'santri-photos/' . $filename;
         }
 
         $santri->update($data);
@@ -154,8 +158,8 @@ class SantriController extends Controller
     {
         $santri = Santri::findOrFail($id);
         
-        if ($santri->foto) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($santri->foto);
+        if ($santri->foto && file_exists(public_path('assets-file/' . $santri->foto))) {
+            unlink(public_path('assets-file/' . $santri->foto));
         }
 
         $santri->delete();

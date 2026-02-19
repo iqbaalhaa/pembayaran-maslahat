@@ -1,7 +1,7 @@
 @php
   $isActive = fn($name) => request()->routeIs($name) ? 'active' : '';
   $logoPath = \App\Models\Setting::getValue('app_logo');
-  $logoUrl = $logoPath ? asset('storage/' . $logoPath) : asset('backend/img/logo.svg');
+  $logoUrl = $logoPath ? asset('assets-file/' . $logoPath) : asset('backend/img/logo.svg');
 @endphp
 
 <aside class="sidebar">

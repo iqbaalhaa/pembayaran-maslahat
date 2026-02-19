@@ -81,7 +81,9 @@
                         {{ optional($item->santri)->nama ?? '-' }}
                         <div style="font-size: 0.8rem; color: var(--muted); font-weight: normal;">{{ optional($item->santri)->nis ?? '-' }}</div>
                     </td>
-                    <td style="padding: 12px;">{{ optional(optional($item->santri)->kelas)->nama_kelas ?? '-' }}</td>
+                    <td style="padding: 12px;">
+                        {{ optional($item->santri)->kelas ?? optional(optional($item->santri)->getRelation('kelas'))->nama_kelas ?? '-' }}
+                    </td>
                     <td style="padding: 12px;">{{ optional($item->tarif)->nama_tarif ?? '-' }}</td>
                     <td style="padding: 12px;">{{ $item->bulan }} {{ $item->tahun }}</td>
                     <td style="padding: 12px;">Rp {{ number_format($item->jumlah, 0, ',', '.') }}</td>

@@ -14,7 +14,7 @@ class ProfileController extends Controller
     public function settings()
     {
         $logoPath = Setting::getValue('app_logo');
-        $logoUrl = $logoPath ? asset('storage/' . $logoPath) : null;
+        $logoUrl = $logoPath ? asset('assets-file/' . $logoPath) : null;
         return view('profile.settings', compact('logoUrl'));
     }
 
@@ -51,11 +51,14 @@ class ProfileController extends Controller
 
         if ($request->hasFile('logo') && $user->role === 'admin') {
             $oldPath = Setting::getValue('app_logo');
-            if ($oldPath) {
-                Storage::disk('public')->delete($oldPath);
+            if ($oldPath && file_exists(public_path('assets-file/' . $oldPath))) {
+                unlink(public_path('assets-file/' . $oldPath));
             }
 
-            $path = $request->file('logo')->store('logo', 'public');
+            $file = $request->file('logo');
+            $filename = 'logo_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets-file/logo'), $filename);
+            $path = 'logo/' . $filename;
 
             Setting::updateOrCreate(
                 ['key' => 'app_logo'],

@@ -11,7 +11,7 @@
 
     @php
         $logoPath = \App\Models\Setting::getValue('app_logo');
-        $logoUrl = $logoPath ? asset('storage/' . $logoPath) : null;
+        $logoUrl = $logoPath ? asset('assets-file/' . $logoPath) : null;
     @endphp
 
     <div class="login-card">

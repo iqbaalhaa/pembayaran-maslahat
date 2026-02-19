@@ -67,7 +67,7 @@
             <label for="foto" style="display: block; margin-bottom: 8px; font-weight: 500;">Foto Santri</label>
             @if($santri->foto)
                 <div style="margin-bottom: 10px;">
-                    <img src="{{ asset('storage/' . $santri->foto) }}" alt="Foto Santri" style="max-height: 100px; border-radius: 8px;">
+                    <img src="{{ asset('assets-file/' . $santri->foto) }}" alt="Foto Santri" style="max-height: 100px; border-radius: 8px;">
                 </div>
             @endif
             <input type="file" name="foto" id="foto" class="form-control" accept="image/*">

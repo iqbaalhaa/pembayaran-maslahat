@@ -13,7 +13,7 @@ class TagihanController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Tagihan::with(['santri', 'tarif']);
+        $query = Tagihan::with(['santri.kelas', 'tarif']);
 
         if ($request->has('search') && $request->search) {
             $query->whereHas('santri', function($q) use ($request) {

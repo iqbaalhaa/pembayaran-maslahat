@@ -22,7 +22,7 @@
     <div class="header">
         @php
             $logoPath = \App\Models\Setting::getValue('app_logo');
-            $logoFile = $logoPath ? public_path('storage/' . $logoPath) : null;
+            $logoFile = $logoPath ? public_path('assets-file/' . $logoPath) : null;
         @endphp
         @if($logoFile && file_exists($logoFile))
             <img src="{{ $logoFile }}" alt="Logo" style="height: 60px; margin-bottom: 8px;">

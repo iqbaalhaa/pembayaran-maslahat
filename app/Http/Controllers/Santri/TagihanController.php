@@ -81,11 +81,14 @@ class TagihanController extends Controller
 
         if ($request->hasFile('bukti_bayar')) {
             // Delete old file if exists (though unlikely if status is not rejected, but good practice)
-            if ($tagihan->bukti_bayar) {
-                Storage::disk('public')->delete($tagihan->bukti_bayar);
+            if ($tagihan->bukti_bayar && file_exists(public_path('assets-file/' . $tagihan->bukti_bayar))) {
+                unlink(public_path('assets-file/' . $tagihan->bukti_bayar));
             }
 
-            $path = $request->file('bukti_bayar')->store('bukti-bayar', 'public');
+            $file = $request->file('bukti_bayar');
+            $filename = 'bukti_' . time() . '_' . $tagihan->id . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets-file/bukti-bayar'), $filename);
+            $path = 'bukti-bayar/' . $filename;
             
             $tagihan->update([
                 'bukti_bayar' => $path,

@@ -54,7 +54,7 @@
                     </td>
                     <td style="padding: 12px; text-align: right;">
                         @if($tagihan->bukti_bayar)
-                            <a href="{{ asset('storage/' . $tagihan->bukti_bayar) }}" target="_blank" style="color: var(--primary); display: inline-flex; align-items: center; justify-content: center;" title="Lihat Bukti Pembayaran">
+                            <a href="{{ asset('assets-file/' . $tagihan->bukti_bayar) }}" target="_blank" style="color: var(--primary); display: inline-flex; align-items: center; justify-content: center;" title="Lihat Bukti Pembayaran">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>

@@ -113,7 +113,7 @@
         $santri = $tagihans->first()->santri; 
         $total = 0;
         $logoPath = \App\Models\Setting::getValue('app_logo');
-        $logoUrl = $logoPath ? asset('storage/' . $logoPath) : null;
+        $logoUrl = $logoPath ? asset('assets-file/' . $logoPath) : null;
     @endphp
     <div class="container">
         <div class="header">

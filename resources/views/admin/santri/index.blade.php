@@ -64,7 +64,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>
                         @if($santri->foto)
-                            <img src="{{ asset('storage/' . $santri->foto) }}" alt="Foto" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border);">
+                            <img src="{{ asset('assets-file/' . $santri->foto) }}" alt="Foto" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border);">
                         @else
                             <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--panel-2); display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 600; font-size: 0.9rem; border: 1px solid var(--border);">
                                 {{ substr($santri->nama, 0, 1) }}
@@ -74,7 +74,9 @@
                     <td style="font-weight: 600;">{{ $santri->nis }}</td>
                     <td style="font-weight: 600;">{{ $santri->nama }}</td>
                     <td>
-                        <span class="badge badge-muted">{{ $santri->kelas->nama_kelas ?? $santri->kelas ?? '-' }}</span>
+                        <span class="badge badge-muted">
+                            {{ ($santri->relationLoaded('kelas') ? optional($santri->getRelation('kelas'))->nama_kelas : null) ?? $santri->kelas ?? '-' }}
+                        </span>
                     </td>
                     <td>
                         {{ $santri->wali_santri ?? '-' }}
