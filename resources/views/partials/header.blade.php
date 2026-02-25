@@ -23,7 +23,32 @@
 
     <div class="avatar-dropdown">
       <button class="avatar-trigger" onclick="this.parentElement.classList.toggle('open')">
-        <span class="dot"></span>
+        @php
+          $user = auth()->user();
+          $avatarUrl = null;
+          $avatarLetter = null;
+          if ($user) {
+            if ($user->role === 'admin') {
+              $logoPath = \App\Models\Setting::getValue('app_logo');
+              if ($logoPath) {
+                $avatarUrl = asset('assets-file/' . $logoPath);
+              }
+              $avatarLetter = strtoupper(substr($user->name ?? 'A', 0, 1));
+            } elseif ($user->role === 'santri' && $user->santri && $user->santri->foto) {
+              $avatarUrl = asset('assets-file/' . $user->santri->foto);
+              $avatarLetter = strtoupper(substr($user->name ?? 'S', 0, 1));
+            } else {
+              $avatarLetter = strtoupper(substr($user->name ?? 'U', 0, 1));
+            }
+          }
+        @endphp
+        <div style="width: 36px; height: 36px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--panel-2); border: 1px solid var(--border); margin-right: 10px;">
+          @if($avatarUrl)
+            <img src="{{ $avatarUrl }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+          @else
+            <span style="font-weight: 700; color: var(--primary);">{{ $avatarLetter }}</span>
+          @endif
+        </div>
         <div class="meta">
           <strong>{{ auth()->user()->name ?? 'Admin' }}</strong>
           <span>MASLAHAT {{ date('Y') }}/{{ date('Y')+1 }}</span>

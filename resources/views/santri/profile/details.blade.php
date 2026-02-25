@@ -41,7 +41,7 @@
         </div>
     @endif
 
-    <form action="{{ route('profile.update.details') }}" method="POST">
+    <form action="{{ route('profile.update.details') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -92,6 +92,17 @@
                             <option value="L" {{ old('jenis_kelamin', optional($user->santri)->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
                             <option value="P" {{ old('jenis_kelamin', optional($user->santri)->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
                     </select>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="foto" style="display: block; margin-bottom: 8px; font-weight: 500;">Foto Profil (Opsional)</label>
+                    @if(optional($user->santri)->foto)
+                        <div style="margin-bottom: 10px;">
+                            <img src="{{ asset('assets-file/' . $user->santri->foto) }}" alt="Foto Santri" style="height: 80px; width: 80px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border);">
+                        </div>
+                    @endif
+                    <input type="file" name="foto" id="foto" class="form-control" accept="image/jpeg,image/png,image/jpg">
+                    <small style="color: var(--muted); display: block; margin-top: 6px;">Format: JPG, JPEG, PNG. Maksimal 2MB.</small>
                 </div>
             </div>
 

@@ -83,15 +83,29 @@ class ProfileController extends Controller
             'jenis_kelamin' => 'required|in:L,P',
             'alamat' => 'required|string',
             'kelas_id' => 'required|exists:kelas,id',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $user->santri->update([
+        $updateData = [
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'alamat' => $request->alamat,
             'kelas_id' => $request->kelas_id,
-        ]);
+        ];
+
+        if ($request->hasFile('foto')) {
+            $old = $user->santri->foto;
+            if ($old && file_exists(public_path('assets-file/' . $old))) {
+                unlink(public_path('assets-file/' . $old));
+            }
+            $file = $request->file('foto');
+            $filename = 'santri_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets-file/santri-photos'), $filename);
+            $updateData['foto'] = 'santri-photos/' . $filename;
+        }
+
+        $user->santri->update($updateData);
 
         return back()->with('success', 'Data diri berhasil diperbarui.');
     }
