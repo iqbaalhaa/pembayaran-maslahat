@@ -72,8 +72,8 @@
                 <td style="text-align: center;">{{ $loop->iteration }}</td>
                 <td>{{ $item->santri->nis }}</td>
                 <td>{{ $item->santri->nama }}</td>
-                <td>{{ $item->santri->kelas->nama_kelas ?? '-' }}</td>
-                <td>{{ $item->tarif->nama_tarif }}</td>
+                <td>{{ optional($item->santri->kelas)->nama_kelas ?? ($item->santri->kelas ?? '-') }}</td>
+                <td>{{ optional($item->tarif)->nama_tarif ?? '-' }}</td>
                 <td>{{ $item->bulan }}</td>
                 <td>{{ $item->tahun }}</td>
                 <td style="text-align: right;">Rp {{ number_format($item->jumlah, 0, ',', '.') }}</td>

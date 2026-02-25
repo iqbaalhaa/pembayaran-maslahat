@@ -55,7 +55,10 @@ class LaporanController extends Controller
         $totalTransaksi = $tagihans->count();
         $kelas = Kelas::orderBy('nama_kelas')->get();
         $tingkatans = $kelas->pluck('tingkatan')->unique()->values();
-        $viewData = array_merge($params, compact('tagihans', 'kelas', 'tingkatans', 'totalJumlah', 'totalTransaksi'));
+        $kelasMap = Kelas::get()->mapWithKeys(function($k){
+            return [strtolower(trim($k->nama_kelas)) => $k->tingkatan];
+        })->toArray();
+        $viewData = array_merge($params, compact('tagihans', 'kelas', 'tingkatans', 'totalJumlah', 'totalTransaksi', 'kelasMap'));
         return view('admin.laporan.tunggakan', $viewData);
     }
     

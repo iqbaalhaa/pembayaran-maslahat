@@ -33,8 +33,11 @@ class SantriController extends Controller
 
         // Pagination
         $santris = $query->latest()->paginate(10)->withQueryString();
+        $kelasMap = Kelas::get()->mapWithKeys(function($k){
+            return [strtolower(trim($k->nama_kelas)) => $k->tingkatan];
+        })->toArray();
 
-        return view('admin.santri.index', compact('santris'));
+        return view('admin.santri.index', compact('santris', 'kelasMap'));
     }
 
     public function import(Request $request)

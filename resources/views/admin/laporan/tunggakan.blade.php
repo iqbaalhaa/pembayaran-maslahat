@@ -99,9 +99,9 @@
                     <td style="padding: 12px;">{{ $loop->iteration }}</td>
                     <td style="padding: 12px;">{{ $item->santri->nis }}</td>
                     <td style="padding: 12px;">{{ $item->santri->nama }}</td>
-                    <td style="padding: 12px;">{{ $item->santri->kelas->nama_kelas ?? '-' }}</td>
-                    <td style="padding: 12px;">{{ $item->santri->kelas->tingkatan ?? '-' }}</td>
-                    <td style="padding: 12px;">{{ $item->tarif->nama_tarif }}</td>
+                    <td style="padding: 12px;">{{ optional($item->santri->kelas)->nama_kelas ?? ($item->santri->kelas ?? '-') }}</td>
+                    <td style="padding: 12px;">{{ optional($item->santri->kelas)->tingkatan ?? ($kelasMap[strtolower(trim($item->santri->kelas))] ?? '-') }}</td>
+                    <td style="padding: 12px;">{{ optional($item->tarif)->nama_tarif ?? '-' }}</td>
                     <td style="padding: 12px;">{{ $item->bulan }} {{ $item->tahun }}</td>
                     <td style="padding: 12px;">Rp {{ number_format($item->jumlah, 0, ',', '.') }}</td>
                     <td style="padding: 12px;">

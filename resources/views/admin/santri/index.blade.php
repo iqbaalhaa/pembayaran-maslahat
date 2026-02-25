@@ -25,6 +25,14 @@
                 Export
             </a>
 
+            {{-- Kelola Tingkatan/Kelas --}}
+            <a href="{{ route('kelas.index') }}" class="btn btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7h16M4 12h16M4 17h16"/>
+                </svg>
+                Kelola Tingkatan/Kelas
+            </a>
+
             {{-- Tombol Tambah --}}
             <a href="{{ route('santri.create') }}" class="btn btn-primary">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -53,6 +61,7 @@
                     <th>NIS</th>
                     <th>Nama</th>
                     <th>Kelas</th>
+                    <th>Tingkatan</th>
                     <th>Wali Santri</th>
                     <th>Status</th>
                     <th style="text-align: right;">Aksi</th>
@@ -78,6 +87,7 @@
                             {{ ($santri->relationLoaded('kelas') ? optional($santri->getRelation('kelas'))->nama_kelas : null) ?? $santri->kelas ?? '-' }}
                         </span>
                     </td>
+                    <td><span class="badge badge-muted">{{ optional($santri->kelas)->tingkatan ?? ($kelasMap[strtolower(trim($santri->kelas))] ?? '-') }}</span></td>
                     <td>
                         {{ $santri->wali_santri ?? '-' }}
                         @if($santri->no_hp_wali)
