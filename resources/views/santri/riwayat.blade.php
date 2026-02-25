@@ -27,7 +27,7 @@
                 <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 12px;">{{ $tagihans->firstItem() + $index }}</td>
                     <td style="padding: 12px;">{{ $tagihan->bulan }} {{ $tagihan->tahun }}</td>
-                    <td style="padding: 12px;">{{ $tagihan->tarif->nama_tarif }}</td>
+                    <td style="padding: 12px;">{{ optional($tagihan->tarif)->nama_tarif ?? '-' }}</td>
                     <td style="padding: 12px;">Rp {{ number_format($tagihan->jumlah, 0, ',', '.') }}</td>
                     <td style="padding: 12px;">
                         @if($tagihan->status == 'lunas')
